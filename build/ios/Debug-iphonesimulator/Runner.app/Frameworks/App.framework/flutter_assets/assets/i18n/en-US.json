@@ -12,5 +12,15 @@
     "cancel": "Cancel",
     "ok": "OK",
     "update": "Update",
-    "changeLanguage": "Change Language"
+    "changeLanguage": "Change Language",
+    "lastPage":"Last Page",
+    "removed":"Removed",
+    "edited":"Edited",
+    "added":"Added",
+    "type_name":"Type name",
+    "type_surname":"Type surname",
+    "choose_date_of_birth":"Choose date",
+    "please_correct_identity":"Type correct identity",
+    "please_type_phone":"Type phone",
+    "please_type_salary":"Type Salary"
 }

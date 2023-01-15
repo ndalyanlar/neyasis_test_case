@@ -1,12 +1,30 @@
 FROM cirrusci/flutter:latest
 
+ADD file:11157b07dde10107f3f6f2b892c869ea83868475d5825167b5f466a7e410eb05 in / 
+USER root
+ENV ANDROID_HOME=/opt/android-sdk-linux LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 LANGUAGE=en_US:en
+ENV ANDROID_SDK_ROOT=/opt/android-sdk-linux PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/android-sdk-linux/cmdline-tools/latest/bin:/opt/android-sdk-linux/platform-tools:/opt/android-sdk-linux/emulator
+ENV ANDROID_SDK_TOOLS_VERSION=8092744
+RUN /bin/sh -c set -o xtrace     && cd /opt     && apt-get update     && apt-get install -y openjdk-11-jdk     && apt-get install -y sudo wget zip unzip git openssh-client curl bc software-properties-common build-essential ruby-full ruby-bundler libstdc++6 libpulse0 libglu1-mesa locales lcov libsqlite3-0 --no-install-recommends     && apt-get install -y libxtst6 libnss3-dev libnspr4 libxss1 libasound2 libatk-bridge2.0-0 libgtk-3-0 libgdk-pixbuf2.0-0     && rm -rf /var/lib/apt/lists/*     && sh -c 'echo "en_US.UTF-8 UTF-8" > /etc/locale.gen'     && locale-gen     && update-locale LANG=en_US.UTF-8     && wget -q https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_SDK_TOOLS_VERSION}_latest.zip -O android-sdk-tools.zip     && mkdir -p ${ANDROID_HOME}/cmdline-tools/     && unzip -q android-sdk-tools.zip -d ${ANDROID_HOME}/cmdline-tools/     && mv ${ANDROID_HOME}/cmdline-tools/cmdline-tools ${ANDROID_HOME}/cmdline-tools/latest     && chown -R root:root $ANDROID_HOME     && rm android-sdk-tools.zip     && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers     && yes | sdkmanager --licenses     && wget -O /usr/bin/android-wait-for-emulator https://raw.githubusercontent.com/travis-ci/travis-cookbooks/master/community-cookbooks/android-sdk/files/default/android-wait-for-emulator     && chmod +x /usr/bin/android-wait-for-emulator     && touch /root/.android/repositories.cfg     && sdkmanager platform-tools     && mkdir -p /root/.android     && touch /root/.android/repositories.cfg     && git config --global user.email "support@cirruslabs.org"     && git config --global user.name "Cirrus CI" # buildkit
+RUN /bin/sh -c if [[ $(uname -m) == "x86_64" ]] ; then sdkmanager emulator ; fi # buildkit
+ENV ANDROID_PLATFORM_VERSION=30
+ENV ANDROID_BUILD_TOOLS_VERSION=30.0.2
+RUN /bin/sh -c yes | sdkmanager     "platforms;android-$ANDROID_PLATFORM_VERSION"     "build-tools;$ANDROID_BUILD_TOOLS_VERSION" # buildkit
+USER root
+ARG flutter_version
+ENV FLUTTER_HOME=/sdks/flutter FLUTTER_VERSION=3.3.10
+ENV FLUTTER_ROOT=/sdks/flutter
+ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/android-sdk-linux/cmdline-tools/latest/bin:/opt/android-sdk-linux/platform-tools:/opt/android-sdk-linux/emulator:/sdks/flutter/bin:/sdks/flutter/bin/cache/dart-sdk/bi
+RUN flutter_version=3.3.10 /bin/sh -c git clone --depth 1 --branch ${FLUTTER_VERSION} https://github.com/flutter/flutter.git ${FLUTTER_HOME}
+RUN flutter_version=3.3.10 /bin/sh -c yes | flutter doctor --android-licenses     && flutter doctor     && chown -R root:root ${FLUTTER_HOME}
+
+
 # Set environment variables
 ENV applicationId neyasis.case
 ENV applicationName Neyasis 
 ENV apiBaseUrl https://63bff73ba177ed68abbc768b.mockapi.io
 ENV versionName  3.0.0
 ENV versionCode 3
-
 
 # Copy project
 COPY . /neyasisAppPROD
@@ -17,7 +35,6 @@ WORKDIR /neyasisAppPROD
 # Flutter commands
 RUN flutter pub get
 RUN flutter doctor
-
 RUN flutter test
    
-CMD ["flutter", "test"]
+CMD ["bash"]

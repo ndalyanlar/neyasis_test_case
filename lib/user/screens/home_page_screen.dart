@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neyasis_test_case/core/localization.dart';
 
 import '../../generated/locale_keys.g.dart';
 import '../domain/index.dart';
@@ -32,6 +33,18 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text(LocaleKeys.users).tr(),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  if (context.locale == MyLocalization.tr) {
+                    context.setLocale(MyLocalization.en);
+                  } else {
+                    context.setLocale(MyLocalization.tr);
+                  }
+                  setState(() {});
+                },
+                icon: const Icon(Icons.language))
+          ],
         ),
         body: BlocConsumer<UserEventsCubit, UsersState>(
             listener: (context, state) {

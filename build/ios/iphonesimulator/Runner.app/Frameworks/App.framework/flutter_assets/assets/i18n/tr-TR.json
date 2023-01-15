@@ -12,5 +12,15 @@
     "cancel": "İptal",
     "ok": "Tamam",
     "update": "Güncelle",
-    "changeLanguage": "Dil Değiştir"
+    "changeLanguage": "Dil Değiştir",
+    "lastPage": "Son Sayfa",
+    "removed": "Silindi",
+    "edited": "Düzenlendi",
+    "added": "Eklendi",
+    "type_name": "Ad giriniz",
+    "type_surname": "Soyad giriniz",
+    "choose_date_of_birth": "Tarih seçiniz",
+    "please_correct_identity": "Kimlik bilgisi doğru değil",
+    "please_type_phone": "Telefon giriniz",
+    "please_type_salary": "Maaş giriniz"
 }

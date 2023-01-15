@@ -12,7 +12,7 @@ void main() async {
     EasyLocalization(
       path: MyLocalization.path,
       //* Change for english language
-      startLocale: MyLocalization.tr,
+
       supportedLocales: MyLocalization.localList,
       child: const UserApp(),
     ),
@@ -26,7 +26,8 @@ class UserApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       locale: context.locale,
-      localizationsDelegates: EasyLocalization.of(context)!.delegates,
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
       title: 'Neyasis Test Case',
       theme: ThemeData(
         primarySwatch: Colors.orange,
