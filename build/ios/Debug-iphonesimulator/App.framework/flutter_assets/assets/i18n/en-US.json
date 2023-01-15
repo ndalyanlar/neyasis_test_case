@@ -1,0 +1,16 @@
+{
+    "users": "Users",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "name": "Name",
+    "surname": "Surname",
+    "dateofbirth": "Date Of Birth",
+    "identitiy": "Identity",
+    "phone": "Phone",
+    "salary": "Salary",
+    "cancel": "Cancel",
+    "ok": "OK",
+    "update": "Update",
+    "changeLanguage": "Change Language"
+}

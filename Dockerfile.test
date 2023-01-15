@@ -1,0 +1,23 @@
+FROM cirrusci/flutter as builder
+
+# Set environment variables
+ENV applicationId neyasis.case.test
+ENV applicationName Neyasis Test
+ENV apiBaseUrl https://63bff73ba177ed68abbc768b.mockapi.io
+ENV versionName 1.0.0
+ENV versionCode 1
+
+# Copy project
+COPY . /neyasisAppTEST
+
+# Change work directory
+WORKDIR /neyasisAppTEST
+
+
+# Flutter commands
+RUN flutter pub get
+RUN flutter doctor
+
+RUN flutter test
+   
+CMD ["flutter", "test"]

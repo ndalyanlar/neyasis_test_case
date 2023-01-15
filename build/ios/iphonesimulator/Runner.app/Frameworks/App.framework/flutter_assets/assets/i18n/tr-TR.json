@@ -1,0 +1,16 @@
+{
+    "users": "Kullanıcılar",
+    "delete": "Sil",
+    "edit": "Düzenle",
+    "add": "Ekle",
+    "name": "Ad",
+    "surname": "Soyad",
+    "dateofbirth": "Doğum Tarihi",
+    "identitiy": "Kimlik",
+    "phone": "Telefon",
+    "salary": "Maaş",
+    "cancel": "İptal",
+    "ok": "Tamam",
+    "update": "Güncelle",
+    "changeLanguage": "Dil Değiştir"
+}
