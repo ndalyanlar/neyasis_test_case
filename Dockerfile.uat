@@ -1,0 +1,23 @@
+FROM cirrusci/flutter:latest
+   
+
+# Set environment variables
+ENV applicationId neyasis.case.uat
+ENV applicationName Neyasis UAT
+ENV apiBaseUrl https://63bff73ba177ed68abbc768b.mockapi.io
+ENV versionName 2.0.0
+ENV versionCode 2
+
+# Copy project
+COPY . /neyasisAppUAT
+
+# Change work directory
+WORKDIR /neyasisAppUAT
+
+# Flutter commands
+RUN flutter pub get
+RUN flutter doctor
+
+RUN flutter test
+   
+CMD ["flutter", "test"]
