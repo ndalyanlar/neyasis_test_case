@@ -8,6 +8,9 @@ import '../domain/service/user_service.dart';
 import '../providers/cubit/user_events_cubit.dart';
 
 import '../domain/models/user_model.dart';
+import 'cancel_button.form.dart';
+import 'date_time_textfield.dart';
+import 'my_textfield.dart';
 
 class AddEditForm extends StatefulWidget {
   const AddEditForm({
@@ -65,111 +68,66 @@ class _AddEditFormState extends State<AddEditForm> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: LocaleKeys.name.tr(),
-                    ),
-                    validator: (value) {
+                  MyTextField(
+                    controller: controllerName,
+                    title: LocaleKeys.name.tr(),
+                    validator: (String? value) {
                       if (value!.isEmpty) return LocaleKeys.type_name.tr();
                       return null;
                     },
-                    controller: controllerName,
-                    // "${user.name} ${user.surname}",
-                    style: const TextStyle(fontWeight: FontWeight.w500),
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: LocaleKeys.surname.tr(),
-                    ),
+                  MyTextField(
+                    controller: controllerSurname,
+                    title: LocaleKeys.surname.tr(),
                     validator: (value) {
                       if (value!.isEmpty) return LocaleKeys.type_surname.tr();
                       return null;
                     },
-                    controller: controllerSurname,
-                    // user.phoneNumber,
                   ),
-                  TextFormField(
-                    onTap: () async {
-                      final date = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1930),
-                          lastDate: DateTime.now());
-                      if (date != null) {
-                        controllerDateOfBirth.text = date.toViewFormat;
-                      }
-                    },
-                    readOnly: true,
-                    decoration: InputDecoration(
-                      labelText: LocaleKeys.dateofbirth.tr(),
-                    ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return LocaleKeys.choose_date_of_birth.tr();
-                      }
-                      return null;
-                    },
-                    controller: controllerDateOfBirth,
-                    // user.identity,
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: LocaleKeys.identitiy.tr(),
-                    ),
-
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(11),
-                      FilteringTextInputFormatter.digitsOnly,
-                    ],
+                  DateTimeTextField(
+                      controllerDateOfBirth: controllerDateOfBirth),
+                  MyTextField(
+                    controller: controllerIdentity,
+                    title: LocaleKeys.identitiy.tr(),
                     validator: (value) {
                       if (value!.isEmpty || value.characters.length != 11) {
                         return LocaleKeys.please_correct_identity.tr();
                       }
                       return null;
                     },
-                    controller: controllerIdentity,
-                    // '${user.salary}',
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: LocaleKeys.phone.tr(),
-                    ),
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(10),
+                    inputFormatter: [
+                      LengthLimitingTextInputFormatter(11),
                       FilteringTextInputFormatter.digitsOnly,
                     ],
+                  ),
+                  MyTextField(
+                    controller: controllerPhone,
+                    title: LocaleKeys.phone.tr(),
                     validator: (value) {
-                      if (value!.isEmpty && value.characters.length != 10) {
+                      if (value!.isEmpty || value.characters.length != 10) {
                         return LocaleKeys.please_type_phone.tr();
                       }
                       return null;
                     },
-                    controller: controllerPhone,
-                    // '${user.birthDate}',
+                    inputFormatter: [
+                      LengthLimitingTextInputFormatter(10),
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: LocaleKeys.salary.tr(),
-                    ),
-
+                  MyTextField(
+                    controller: controllerSalary,
+                    title: LocaleKeys.salary.tr(),
                     validator: (value) {
                       if (value!.isEmpty) {
                         return LocaleKeys.please_type_phone.tr();
                       }
                       return null;
                     },
-                    controller: controllerSalary,
-                    // '${user.birthDate}',
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      OutlinedButton(
-                        child: const Text(LocaleKeys.cancel).tr(),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
+                      const CancelButtonForm(),
                       const SizedBox(
                         width: 12,
                       ),
