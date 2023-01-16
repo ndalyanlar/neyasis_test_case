@@ -21,7 +21,7 @@ class MyTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       decoration: InputDecoration(
-        labelText: LocaleKeys.name.tr(),
+        labelText: title,
       ),
       validator: validator,
       inputFormatters: inputFormatter,
